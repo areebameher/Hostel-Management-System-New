@@ -16,7 +16,7 @@ public class Connect {
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection con;
-            con = DriverManager.getConnection("jdbc:sqlserver://DESKTOP-LRAB979\\SQLEXPRESS02:1433; databaseName=Hostel_Management_System;user=areeba;password=cutie");
+            con = DriverManager.getConnection("jdbc:sqlserver://Amina-Laptop\\SQLEXPRESS:1433; databaseName=hostel_database;user=amina;password=java;encrypt=true;trustServerCertificate=true;");
             JOptionPane.showMessageDialog(null, "Connection Established");
             return con;
             

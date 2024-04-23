@@ -6,6 +6,7 @@
 import DBConnect.Connect;
 import java.awt.HeadlessException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,11 +18,10 @@ import javax.swing.table.DefaultTableModel;
  */
 
  
-    public ManageRoom() {
-        initComponents();
-        
-    }
+    
 public class ManageRoom extends javax.swing.JFrame {
+    
+    
 
     
     public void clear(){
@@ -30,17 +30,33 @@ public class ManageRoom extends javax.swing.JFrame {
         addCheckbox.setSelected(false);
         updateCheckbox.setSelected(false);
     }
+    
+    
     public void tableDetails(){
         DefaultTableModel table = (DefaultTableModel) roomsTable.getModel();
         table.setRowCount(0);
         try{
-        Connect conn = new Connect();
-        conn.db();
+        
+        Connection conn = Connect.db();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select * from room");
+        while(rs.next()){
+            table.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3)});
+        }
 
     } catch (Exception e){
         JOptionPane.showMessageDialog(null, e);
     }
+    }
+     public ManageRoom() {
+        initComponents();
+        
+    }
   
+    /**
+     *
+     */
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -217,36 +233,40 @@ public class ManageRoom extends javax.swing.JFrame {
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         // TODO add your handling code here:
         String roomNumber = updateRoomNum.getText();
-////        int i = 0;
-////        try{
-////             Connect conn = new Connect();
-////               conn.db();
-////            Statement stmt = conn.createStatement();
-////            ResultSet rs = stmt.executeQuery("select * from room where number='"+roomNumber"'");
-////            while(rs.next()){
-////                i = 1;
-////                if(rs.getString(3).equals("Booked")){
-////                    JOptionPane.showMessageDialog(null, "This room is booked");
-////                    clear();
-////                }else{
-////                    updateRoomNum.setEditable(false);
-////                    if(rs.getString(2).equals("Yes")){
-////                        updateCheckbox.setSelected(true);
-////                    }else{
-////                        updateCheckbox.setSelected(false);
-////                    }
-////                }
-////            }
-////            if(i == 0){
-////                JOptionPane.showMessageDialog(null, "Room Number does not exist.");
-////                clear();
-////            }
-////        
-////            
-////            
-////        } catch(Exception e){
-////            JOptionPane.showMessageDialog(null, e);
-////        }
+        int i = 0;
+        try{
+            Connection conn = Connect.db();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from room where number='"+roomNumber+"'");
+            if(rs.next()){
+                i = 1;
+                if(rs.getString(3).equals("Booked")){
+                    JOptionPane.showMessageDialog(null, "This room is booked");
+                    clear();
+                }else{
+                    
+                    if(rs.getString(2).equals("Yes")){
+                        updateCheckbox.setSelected(true);
+                    }else{
+                        updateCheckbox.setSelected(false);
+                    }
+                }
+                DefaultTableModel table = (DefaultTableModel) roomsTable.getModel();
+            table.setRowCount(0); // Clear existing table data
+            table.addRow(new Object[]{rs.getString(1), rs.getString(2), rs.getString(3)});
+            }
+            if(i == 0){
+                JOptionPane.showMessageDialog(null, "Room Number does not exist.");
+                clear();
+            }
+           
+            
+            
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
@@ -266,7 +286,7 @@ public class ManageRoom extends javax.swing.JFrame {
             activate = "No";
         }
         try{
-        
+            Connection conn = Connect.db();
             PreparedStatement ps = conn.prepareStatement("insert into room values (?,?,?)");
             ps.setString(1,roomNumber);
             ps.setString(2,activate);
@@ -290,7 +310,7 @@ public class ManageRoom extends javax.swing.JFrame {
             activate = "No";
         }
         try{
-            Connection conn = ConnectionProvider.getCon();
+            Connection conn = Connect.db();
             Statement stmt = conn.createStatement();
             stmt.executeUpdate("update room set activate='"+activate+"'where number='"+roomNumber+"'");
             JOptionPane.showMessageDialog(null, "Updated Successfully");
@@ -309,7 +329,9 @@ public class ManageRoom extends javax.swing.JFrame {
         try{
           
             Connect conn = new Connect();
-        conn.db();
+            conn.db();
+            Connection connection = conn.db();
+            Statement stmt = connection.createStatement();
             stmt.executeUpdate("delete from room where number='"+roomNumber+"'");
             JOptionPane.showMessageDialog(null, "Deleted Successfully");
             tableDetails();

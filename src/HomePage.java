@@ -168,13 +168,13 @@ public class HomePage extends javax.swing.JFrame {
         getContentPane().add(tfhome11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 720, 249, -1));
 
         logoutb2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logout.png"))); // NOI18N
-        logoutb2.setText("LogOut");
+        logoutb2.setText("Log Out");
         logoutb2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 logoutb2ActionPerformed(evt);
             }
         });
-        getContentPane().add(logoutb2, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 10, 70, 59));
+        getContentPane().add(logoutb2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 10, 150, 59));
 
         closeb2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Close.png"))); // NOI18N
         closeb2.setText("Exit");
@@ -183,7 +183,7 @@ public class HomePage extends javax.swing.JFrame {
                 closeb2ActionPerformed(evt);
             }
         });
-        getContentPane().add(closeb2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 10, 70, 59));
+        getContentPane().add(closeb2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 10, 120, 59));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/home background.PNG"))); // NOI18N
         jLabel1.setText("jLabel1");
@@ -194,11 +194,13 @@ public class HomePage extends javax.swing.JFrame {
 
     private void tfhome2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfhome2ActionPerformed
         // TODO add your handling code here:
+        
+        
         tfhome2.setForeground(Color.red);
         tfhome2.setBackground(new Color(255,255,255));
         new NewStudent().setVisible(true);
     }//GEN-LAST:event_tfhome2ActionPerformed
-    }
+    
     private void formWindowGainedFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowGainedFocus
         // TODO add your handling code here:
         tfhome1.setForeground(new JButton().getForeground());
