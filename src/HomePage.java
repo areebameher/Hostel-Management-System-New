@@ -283,7 +283,7 @@ public class HomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
          tfhome5.setForeground(Color.red);
         tfhome5.setBackground(new Color(255,255,255));
-        new AllStudentLiving().setVisible(true);
+        new currentStudents().setVisible(true);
     }//GEN-LAST:event_tfhome5ActionPerformed
 
     private void tfhome6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfhome6ActionPerformed
@@ -318,7 +318,7 @@ public class HomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
          tfhome10.setForeground(Color.red);
         tfhome10.setBackground(new Color(255,255,255));
-        new AllEmployeeWorking().setVisible(true);
+        new currentEmployees().setVisible(true);
     }//GEN-LAST:event_tfhome10ActionPerformed
 
     private void tfhome11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfhome11ActionPerformed
