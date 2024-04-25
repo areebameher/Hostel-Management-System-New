@@ -1,3 +1,7 @@
+import java.sql.*;
+import DBConnect.Connect;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,7 +19,22 @@ public class PastEmployees extends javax.swing.JFrame {
      */
     public PastEmployees() {
         initComponents();
+        DefaultTableModel table = (DefaultTableModel) pastEmployeesTable.getModel();
+        try{
+        
+        Connection conn = Connect.db();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select * from employee where status='past'");
+        while(rs.next()){
+            table.addRow(new Object[]{rs.getString(2), rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5), rs.getString(6),rs.getString(7),rs.getString(8)});
+     
+        }
+
+    } catch (Exception e){
+        JOptionPane.showMessageDialog(null, e);
     }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,7 +50,7 @@ public class PastEmployees extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        pastEmployeesTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
 
         jLabel1.setBackground(new java.awt.Color(255, 153, 204));
@@ -56,7 +75,7 @@ public class PastEmployees extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(615, 16, 74, 60));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        pastEmployeesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -64,7 +83,7 @@ public class PastEmployees extends javax.swing.JFrame {
                 "Name", "Mobile No", "Father Name", "Mother Name", "Email", "Address", "Designation"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(pastEmployeesTable);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 674, 400));
 
@@ -129,6 +148,6 @@ public class PastEmployees extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable pastEmployeesTable;
     // End of variables declaration//GEN-END:variables
 }
