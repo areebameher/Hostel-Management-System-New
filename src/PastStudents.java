@@ -1,3 +1,8 @@
+import java.sql.*;
+import DBConnect.Connect;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +20,21 @@ public class PastStudents extends javax.swing.JFrame {
      */
     public PastStudents() {
         initComponents();
+        DefaultTableModel table = (DefaultTableModel) pastStudentsTable.getModel();
+        table.setRowCount(0);
+        try{
+        
+        Connection conn = Connect.db();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select * from student where status='past'");
+        while(rs.next()){
+            table.addRow(new Object[]{rs.getString(2), rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5), rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9)});
+     
+        }
+
+    } catch (Exception e){
+        JOptionPane.showMessageDialog(null, e);
+    }
     }
 
     /**
@@ -29,7 +49,7 @@ public class PastStudents extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        pastStudentsTable = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/pages background.jpg"))); // NOI18N
@@ -48,7 +68,7 @@ public class PastStudents extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 10, 77, 56));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        pastStudentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -56,7 +76,7 @@ public class PastStudents extends javax.swing.JFrame {
                 "Name", "Mobile Number", "Father name", "mother name", "Email", "Address", "Room No"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(pastStudentsTable);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 670, 410));
 
@@ -115,6 +135,6 @@ public class PastStudents extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable pastStudentsTable;
     // End of variables declaration//GEN-END:variables
 }

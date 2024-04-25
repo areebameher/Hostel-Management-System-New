@@ -1,3 +1,8 @@
+import java.sql.*;
+import DBConnect.Connect;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+        
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +20,21 @@ public class currentStudents extends javax.swing.JFrame {
      */
     public currentStudents() {
         initComponents();
+        DefaultTableModel table = (DefaultTableModel) currentStudentsTable.getModel();
+        table.setRowCount(0);
+        try{
+        
+        Connection conn = Connect.db();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select * from student where status='current'");
+        while(rs.next()){
+            table.addRow(new Object[]{rs.getString(2), rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5), rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9)});
+     
+        }
+
+    } catch (Exception e){
+        JOptionPane.showMessageDialog(null, e);
+    }
     }
 
     /**
@@ -28,7 +48,7 @@ public class currentStudents extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        currentStudentsTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -44,7 +64,7 @@ public class currentStudents extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(592, 9, 83, 60));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        currentStudentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -55,7 +75,7 @@ public class currentStudents extends javax.swing.JFrame {
                 "Name", "Mobile Number", "Father Name", "Mother Name", "Email", "Address", "College Name", "Room No "
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(currentStudentsTable);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 670, 370));
 
@@ -110,9 +130,9 @@ public class currentStudents extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable currentStudentsTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

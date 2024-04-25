@@ -1,3 +1,8 @@
+import java.sql.*;
+import DBConnect.Connect;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +20,20 @@ public class currentEmployees extends javax.swing.JFrame {
      */
     public currentEmployees() {
         initComponents();
+        DefaultTableModel table = (DefaultTableModel) currentEmployeesTable.getModel();
+        try{
+        
+        Connection conn = Connect.db();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select * from employee where status='current'");
+        while(rs.next()){
+            table.addRow(new Object[]{rs.getString(2), rs.getString(1), rs.getString(3),rs.getString(4),rs.getString(5), rs.getString(6),rs.getString(7),rs.getString(8)});
+     
+        }
+
+    } catch (Exception e){
+        JOptionPane.showMessageDialog(null, e);
+    }
     }
 
     /**
@@ -29,7 +48,7 @@ public class currentEmployees extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        currentEmployeesTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(480, 150));
@@ -44,7 +63,7 @@ public class currentEmployees extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        currentEmployeesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -52,7 +71,7 @@ public class currentEmployees extends javax.swing.JFrame {
                 "Name", "Mobile No", "Mother Name", "Father Name", "Email", "Address", "Designation"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(currentEmployeesTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -135,9 +154,9 @@ public class currentEmployees extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable currentEmployeesTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

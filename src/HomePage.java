@@ -325,7 +325,7 @@ public class HomePage extends javax.swing.JFrame {
         // TODO add your handling code here:
          tfhome11.setForeground(Color.red);
         tfhome11.setBackground(new Color(255,255,255));
-        new PastEmployee().setVisible(true);
+        new PastEmployees().setVisible(true);
     }//GEN-LAST:event_tfhome11ActionPerformed
 
     /**
